@@ -1,10 +1,20 @@
-import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, Button, TextInput, ScrollView, Image } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, TextInput, ScrollView, Image } from 'react-native';
 import axios from 'axios';
+import * as Font from 'expo-font';
+import Button from 'apsl-react-native-button'
 
 
 export default function App() {
+
+  useEffect(() => {
+    // load font using expo font 
+    Font.loadAsync({
+      cairoBold: require('./assets/fonts/Cairo-Bold.ttf'),
+    });
+  });
+
+
 
   //SATE LIST
   const [coffeList, setCoffeList] = useState([]); //ARRAY OF OBJECT CONTAIN IMAGE LINK AND TEXT ENTRED BY USER
@@ -31,16 +41,24 @@ export default function App() {
           style={styles.inputText}
           value={text}
           placeholder='Quoi de neuf ?'
+          placeholderStyle={{ fontFamily: 'cairoBold', Padding: 10 }}
           onChangeText={text => setText(text)}
         />
-        <View style={styles.bTn}>
+        <View style={styles.bTnContainer}>
 
           <Button
-
-            color="#FFED4E"
-            title='Publier'
+            style={{
+              backgroundColor: "#FFED4E",
+              borderColor: "transparent",
+              borderRadius: 20,
+              width: 100,
+            }}
+            textStyle={{
+              color: "#FFFFFF", fontSize: 15, fontFamily: 'cairoBold'
+            }}
             onPress={bTnClick}
           >
+            Publier
           </Button>
         </View>
       </View>
@@ -67,7 +85,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
   },
   header: {
     position: 'relative',// RESOLVED THE PROBLEM WHEN OPEN KEYBOARD IT PUSHES ALL COMPONENTS TO THE TOP
@@ -77,25 +94,23 @@ const styles = StyleSheet.create({
     width: 350,
     height: 50,
     backgroundColor: "#FAFAFA",
-    borderRadius: 10
+    borderRadius: 10,
   },
   logo: {
     width: 350,
     height: 250,
   },
-  bTn: {
-    width: 100,
+  bTnContainer: {
     alignSelf: 'flex-end',
-    borderRadius: 100,
     margin: 10
   },
   ScrollView: {
     marginTop: 10
   },
-
   textItem: {
     marginBottom: 10,
-    alignItems: 'flex-start'
+    alignItems: 'flex-start',
+    fontFamily: 'cairoBold'
   },
   itemCss: {
     margin: 10
